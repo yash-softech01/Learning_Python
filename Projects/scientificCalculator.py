@@ -1,83 +1,271 @@
-import tkinter as tk
-import math
+from tkinter import *
 import tkinter.messagebox
+import math
 
-# Function to evaluate basic arithmetic expressions
-def evaluate_expression(expression):
-    try:
-        result = eval(expression)
-        return result
-    except Exception:
-        return "Error"
+root = Tk()
+root.geometry("650x400+300+300")
+root.title("Scientific Calculator")
+switch = None
 
-# Function to handle button clicks
-def button_click(value):
-    current_expression = disp.get()
-    new_expression = current_expression + str(value)
-    disp.delete(0, tk.END)
-    disp.insert(0, new_expression)
+# Button press functions
+def btn_num_clicked(num):
+    if disp.get() == '0':
+        disp.delete(0, END)
+    pos = len(disp.get())
+    disp.insert(pos, num)
 
-# Function to handle the factorial calculation
-def fact_clicked():
+def btn_op_clicked(op):
+    pos = len(disp.get())
+    disp.insert(pos, op)
+
+def btnc_clicked(*args):
+    disp.delete(0, END)
+    disp.insert(0, '0')
+
+def sin_clicked():
     try:
         ans = float(disp.get())
-        if ans < 0 or not ans.is_integer():  # Check for non-negative integer
-            raise ValueError("Factorial is defined for non-negative integers only.")
-        
-        ans = math.factorial(int(ans))  # Convert to int before calculating factorial
-        disp.delete(0, tk.END)
+        if switch is True:
+            ans = math.sin(math.radians(ans))
+        else:
+            ans = math.sin(ans)
+        disp.delete(0, END)
         disp.insert(0, str(ans))
-    except ValueError as ve:
-        tkinter.messagebox.showerror("Value Error", str(ve))
     except Exception:
-        tkinter.messagebox.showerror("Error", "Check your values and operators")
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Function to clear the display
-def clear_display():
-    disp.delete(0, tk.END)
+def cos_clicked():
+    try:
+        ans = float(disp.get())
+        if switch is True:
+            ans = math.cos(math.radians(ans))
+        else:
+            ans = math.cos(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Function to calculate and display the result
-def calculate_result():
-    current_expression = disp.get()
-    result = evaluate_expression(current_expression)
-    disp.delete(0, tk.END)
-    disp.insert(0, str(result))
+def tan_clicked():
+    try:
+        ans = float(disp.get())
+        if switch is True:
+            ans = math.tan(math.radians(ans))
+        else:
+            ans = math.tan(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Create the main window
-root = tk.Tk()
-root.title("Simple Calculator")
-root.geometry("400x600")
-root.configure(bg="#f0f0f0")
+def logarithm_clicked():
+    try:
+        ans = float(disp.get())
+        ans = math.log10(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Create the display
-disp = tk.Entry(root, font=("Arial", 24), borderwidth=2, relief="ridge", justify="right")
-disp.grid(row=0, column=0, columnspan=4, padx=10, pady=20, sticky="nsew")
+def ln_clicked():
+    try:
+        ans = float(disp.get())
+        ans = math.log(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Create buttons
-buttons = [
-    ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
-    ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
-    ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
-    ('0', 4, 0), ('C', 4, 1), ('=', 4, 2), ('+', 4, 3),
-    ('!', 5, 0)
-]
+def pow_clicked():
+    pos = len(disp.get())
+    disp.insert(pos, '**')
 
-for (text, row, column) in buttons:
-    if text == 'C':
-        button = tk.Button(root, text=text, font=("Arial", 18), command=clear_display, bg="#ffdddd")
-    elif text == '=':
-        button = tk.Button(root, text=text, font=("Arial", 18), command=calculate_result, bg="#ddffdd")
-    elif text == '!':
-        button = tk.Button(root, text=text, font=("Arial", 18), command=fact_clicked, bg="#ddffff")
+def fact_clicked():
+    try:
+        ans = int(disp.get())
+        ans = math.factorial(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
+
+def sqr_clicked():
+    try:
+        ans = float(disp.get())
+        ans = math.sqrt(ans)
+        disp.delete(0, END)
+        disp.insert(0, str(ans))
+    except Exception:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
+
+def pi_clicked():
+    if disp.get() == '0':
+        disp.delete(0, END)
+    pos = len(disp.get())
+    disp.insert(pos, str(math.pi))
+
+def e_clicked():
+    if disp.get() == '0':
+        disp.delete(0, END)
+    pos = len(disp.get())
+    disp.insert(pos, str(math.e))
+
+def mod_clicked():
+    pos = len(disp.get())
+    disp.insert(pos, '%')
+
+def del_clicked():
+    pos = len(disp.get())
+    display = str(disp.get())
+    if display == '':
+        disp.insert(0, '0')
+    elif display == ' ':
+        disp.insert(0, '0')
+    elif display == '0':
+        pass
     else:
-        button = tk.Button(root, text=text, font=("Arial", 18), command=lambda t=text: button_click(t))
+        disp.delete(0, END)
+        disp.insert(0, display[0:pos-1])
 
-    button.grid(row=row, column=column, sticky="nsew", padx=5, pady=5)
+def btneq_clicked(*args):
+    try:
+        ans = disp.get()
+        ans = eval(ans)
+        disp.delete(0, END)
+        disp.insert(0, ans)
+    except:
+        tkinter.messagebox.showerror("Value Error", "Check your values and operators")
 
-# Configure grid weights for better resizing
-for i in range(6):
-    root.grid_rowconfigure(i, weight=1)
-    root.grid_columnconfigure(i, weight=1)
+# Conversion button function
+def conv_clicked():
+    global switch
+    if switch is None:
+        switch = True
+        conv_btn['text'] = "Deg"
+    else:
+        switch = None
+        conv_btn['text'] = "Rad"
 
-# Start the main loop
+# Display
+data = StringVar()
+disp = Entry(root, font="Verdana 20", fg="black", bg="mistyrose", bd=0, justify=RIGHT,
+              insertbackground="#abbab1", cursor="arrow")
+disp.insert(0, '0')
+disp.pack(expand=TRUE, fill=BOTH)
+
+# Row 1 Buttons
+btnrow1 = Frame(root, bg="#000000")
+btnrow1.pack(expand=TRUE, fill=BOTH)
+
+# Adding buttons to Row 1
+for i in range(1, 4):
+    Button(btnrow1, text=str(i), font="Segoe 23", relief=GROOVE, bd=0,
+           command=lambda i=i: btn_num_clicked(i), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow1, text="+", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_op_clicked('+'), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 2 Buttons
+btnrow2 = Frame(root)
+btnrow2.pack(expand=TRUE, fill=BOTH)
+
+for i in range(4, 7):
+    Button(btnrow2, text=str(i), font="Segoe 23", relief=GROOVE, bd=0,
+           command=lambda i=i: btn_num_clicked(i), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow2, text="-", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_op_clicked('-'), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 3 Buttons
+btnrow3 = Frame(root)
+btnrow3.pack(expand=TRUE, fill=BOTH)
+
+for i in range(7, 10):
+    Button(btnrow3, text=str(i), font="Segoe 23", relief=GROOVE, bd=0,
+           command=lambda i=i: btn_num_clicked(i), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow3, text="*", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_op_clicked('*'), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 4 Buttons
+btnrow4 = Frame(root)
+btnrow4.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow4, text="0", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_num_clicked(0), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow4, text=".", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_op_clicked('.'), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow4, text="/", font="Segoe 23", relief=GROOVE, bd=0,
+       command=lambda: btn_op_clicked('/'), fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 5 Buttons
+btnrow5 = Frame(root)
+btnrow5.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow5, text="sin", font="Segoe 18", relief=GROOVE, bd=0,
+       command=sin_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow5, text="cos", font="Segoe 18", relief=GROOVE, bd=0,
+       command=cos_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow5, text="tan", font="Segoe 18", relief=GROOVE, bd=0,
+       command=tan_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 6 Buttons
+btnrow6 = Frame(root)
+btnrow6.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow6, text="log", font="Segoe 18", relief=GROOVE, bd=0,
+       command=logarithm_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow6, text="ln", font="Segoe 18", relief=GROOVE, bd=0,
+       command=ln_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow6, text="√x", font="Segoe 18", relief=GROOVE, bd=0,
+       command=sqr_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 7 Buttons
+btnrow7 = Frame(root)
+btnrow7.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow7, text="π", font="Segoe 18", relief=GROOVE, bd=0,
+       command=pi_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow7, text="e", font="Segoe 18", relief=GROOVE, bd=0,
+       command=e_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow7, text="x^y", font="Segoe 18", relief=GROOVE, bd=0,
+       command=pow_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 8 Buttons
+btnrow8 = Frame(root)
+btnrow8.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow8, text="!", font="Segoe 18", relief=GROOVE, bd=0,
+       command=fact_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow8, text="Mod", font="Segoe 18", relief=GROOVE, bd=0,
+       command=mod_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow8, text="Del", font="Segoe 18", relief=GROOVE, bd=0,
+       command=del_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Row 9 Buttons
+btnrow9 = Frame(root)
+btnrow9.pack(expand=TRUE, fill=BOTH)
+
+Button(btnrow9, text="C", font="Segoe 18", relief=GROOVE, bd=0,
+       command=btnc_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+Button(btnrow9, text="=", font="Segoe 18", relief=GROOVE, bd=0,
+       command=btneq_clicked, fg="white", bg="#333333").pack(side=LEFT, expand=TRUE, fill=BOTH)
+
+# Conversion Button
+conv_btn = Button(btnrow9, text="Rad", font="Segoe 18", relief=GROOVE, bd=0,
+                  command=conv_clicked, fg="white", bg="#333333")
+conv_btn.pack(side=LEFT, expand=TRUE, fill=BOTH)
+
 root.mainloop()
+
