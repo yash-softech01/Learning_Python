@@ -6,5 +6,7 @@ key = input("Enter a key to remove (A-D): ")
 
 if key in dict.keys():
   del dict[key]
+else:
+  print("Key doesn't exit")
 
 print("Updated Dictionary: ", dict)
