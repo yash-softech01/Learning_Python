@@ -10,3 +10,5 @@ else:
   print("Key isn't present")
 
 
+# print(dict.values())
+# print(dict.keys())
