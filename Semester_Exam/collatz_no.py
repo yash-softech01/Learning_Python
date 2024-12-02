@@ -3,7 +3,7 @@
 n = int(input("Enter a number: "))
 
 while n > 1:
-    print(n, end=''+ " ")
+    print(n, end=" ")
     if(n%2): #odd
         n = 3*n + 1
     else: #even
